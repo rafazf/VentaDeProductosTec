@@ -4,6 +4,7 @@
     @if (products$ | async; as prod) { @for (product of prod; track $index) {
     <article
       class="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border"
+      (click)="addProduct(product)"
     >
       <div class="flex justify-between items-center w-full pb-4 mb-auto">
         <div class="flex items-center">
@@ -42,7 +43,6 @@
       </h3>
       <div></div>
     </article>
-
     } }
   </div>
 </div>
