@@ -11,3 +11,12 @@
         spellcheck="false" placeholder="Search..." type="text" (ngModelChange)="searchAdd($event)" [(ngModel)]="search"
         [value]="search" />
 </div>
+<div [ngClass]="{ hidden: !isLoading }" class="absolute bg-white rounded-xl z-10 p-3 shadow-xl w-auto">
+    @if (dataSearch$) {
+    <ul class="productList">
+      @for (item of dataSearch$; track $index) {
+      <li class="hover:bg-blue-500 hover:text-white rounded-xl cursor-pointer p-2" (click)="addProduct(item)">{{ item.model }} - {{item.price | currency:'USD'}}</li>
+      }
+    </ul>
+    }
+  </div>
