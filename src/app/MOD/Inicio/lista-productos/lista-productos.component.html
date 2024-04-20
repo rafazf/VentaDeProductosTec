@@ -1,0 +1,48 @@
+<!-- component -->
+<div class="rounded-2xl bg-white p-5">
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
+    @if (products$ | async; as prod) { @for (product of prod; track $index) {
+    <article
+      class="bg-white p-6 mb-6 shadow transition duration-300 group transform hover:-translate-y-2 hover:shadow-2xl rounded-2xl cursor-pointer border"
+    >
+      <div class="flex justify-between items-center w-full pb-4 mb-auto">
+        <div class="flex items-center">
+          <div class="flex flex-1">
+            <div class="">
+              <p class="text-sm font-semibold">{{ product.brand }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <div class="text-sm flex items-center text-gray-500">
+            {{ product.price | currency : "USD" }}
+            <svg
+              class="ml-1 w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <h3 class="font-medium text-xl leading-8">
+        <a
+          class="block relative group-hover:text-blue-700 transition-colors duration-200"
+        >
+          {{ product.model }}
+        </a>
+      </h3>
+      <div></div>
+    </article>
+
+    } }
+  </div>
+</div>
