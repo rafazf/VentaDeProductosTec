@@ -55,4 +55,8 @@ export class CarritoProductosComponent implements OnInit{
   updateQuantity(operation:string, id: number){
     this.cartService.updateQuantity(operation,id);
   }
+  /**Proceso de pago */
+  payment(){
+    this.cartService.showPayment('show');
+  }
 }

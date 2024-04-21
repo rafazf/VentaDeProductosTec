@@ -10,10 +10,15 @@ export class SharedProductsService {
 
   private arrProducts:IProduct[] = [];
   private cart:IProductCar[]=[];
-  private _products:BehaviorSubject<IProduct[]> = new BehaviorSubject<IProduct[]>([]);
+  private _products:BehaviorSubject<IProduct[]>;
   private _myCart:BehaviorSubject<IProductCar[]>;
+  private  _payment:BehaviorSubject<string>;
 
-  constructor() { this._myCart = new  BehaviorSubject<IProductCar[]>([])}
+  constructor() { 
+    this._products = new BehaviorSubject(this.arrProducts);
+    this._myCart = new BehaviorSubject<IProductCar[]>([]);
+    this._payment = new BehaviorSubject<string>('');
+  }
 
   get myCart(){
     return this._myCart.asObservable();
@@ -24,7 +29,6 @@ export class SharedProductsService {
   }
 
   addProduct(data:IProduct){
-    console.log(data)
     const idSearch = this.arrProducts.some((item)=>{return item.id === data.id});
 
     if(idSearch){
@@ -75,4 +79,11 @@ export class SharedProductsService {
     })
   }
 
+  /**mostrar sección de pago al seleccionar boton de pagar */
+  showPayment(band:string){
+    this._payment.next(band);
+  }
+  getBandPayment(){
+    return this._payment.asObservable();
+  }
 }

@@ -1,25 +1,51 @@
-<div class="flex rounded-2xl bg-white p-5 w-full h-full flex-col">
-    @if (card$ | async; as items) { 
-        @for (item of items; track $index) {
-          <div class="flex items-center gap-3 border-b justify-between">
-            <div class="flex flex-row gap-3 justify-between w-full">
-              <span>{{ item.product.brand }}</span>
-              <span>{{ item.product.model }}</span>
-              <span>{{ item.product.price }}</span>
-            </div>
-            <div class="flex gap-2 p-2">
-              <button class="bg-slate-200 rounded-lg py-1 px-2" (click)="updateQuantity('-',item.product.id)">-</button>
-              <input 
-                [value]="item.cant" 
-                type="text" 
-                class="w-10 text-center"
-                (ngModelChange)="setCant($event,item.product.id)"
-                [(ngModel)]="item.cant"
-              />
-              <button class="bg-slate-200 rounded-lg py-1 px-2" (click)="updateQuantity('+',item.product.id)">+</button>
-              <button class="bg-red-300 text-red-500 py-1 px-2 rounded-lg" (click)="onDeleted($index)">x</button>
-            </div>
-        </div>
-        } 
-      }
+<div class="flex rounded-2xl bg-white p-5 w-full h-full flex-col justify-between">
+  <div class="overflow-y-scroll overscroll-auto h-72">
+    @if (card$ | async; as items) { @for (item of items; track $index) {
+    <div class="flex items-center gap-3 border-b justify-between">
+      <div class="flex flex-row gap-3 justify-between w-full">
+        <span>{{ item.product.brand }}</span>
+        <span>{{ item.product.model }}</span>
+        <span>{{ item.product.price }}</span>
+      </div>
+      <div class="flex gap-2 p-2">
+        <button
+          class="bg-slate-200 rounded-lg py-1 px-2"
+          (click)="updateQuantity('-', item.product.id)"
+        >
+          -
+        </button>
+        <input
+          [value]="item.cant"
+          type="text"
+          class="w-10 text-center"
+          (ngModelChange)="setCant($event, item.product.id)"
+          [(ngModel)]="item.cant"
+        />
+        <button
+          class="bg-slate-200 rounded-lg py-1 px-2"
+          (click)="updateQuantity('+', item.product.id)"
+        >
+          +
+        </button>
+        <button
+          class="bg-red-300 text-red-500 py-1 px-2 rounded-lg"
+          (click)="onDeleted($index)"
+        >
+          x
+        </button>
+      </div>
+    </div>
+    } }
+  </div>
+  <div class="rounded-xl border p-2 flex justify-between items-center">
+    <div class="">
+      <span>Total: </span>
+      <span class="font-bold">{{total | currency:'USD'}}</span>
+    </div>
+    <button 
+      class="bg-blue-500 px-5 py-1 rounded-lg text-white hover:shadow-lg font-bold"
+      (click)="payment()"
+    >Pay
+    </button>
+  </div>
 </div>
