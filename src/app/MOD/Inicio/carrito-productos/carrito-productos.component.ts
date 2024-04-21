@@ -22,11 +22,11 @@ export class CarritoProductosComponent implements OnInit{
   cartService = inject(SharedProductsService);
   arrCard: IProduct[]=[];
   total:number=0;
-
+  habilitarPago:boolean = false;
   constructor() {
     this.card$ = this.cartService.myCart
   }
-
+  
   ngOnInit(): void {
     this.cartService.products.subscribe((data)=>{
       this.arrCard = data;
@@ -36,7 +36,14 @@ export class CarritoProductosComponent implements OnInit{
       map((itemCart=>{
         return itemCart.reduce((prev, curr)=> prev + curr.product.price * curr.cant,0)
       }))
-    ).subscribe(val=>this.total = val);
+    ).subscribe(val=>{
+      this.total = val
+      if(val>0){
+        this.habilitarPago = false
+      }else{
+        this.habilitarPago = true
+      }
+    });
   }
 
   /**Eliminar un producto del carrito */

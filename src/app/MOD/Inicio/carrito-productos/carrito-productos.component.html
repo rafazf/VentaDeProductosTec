@@ -43,9 +43,10 @@
       <span class="font-bold">{{total | currency:'USD'}}</span>
     </div>
     <button 
+      [disabled]="habilitarPago"
       class="bg-blue-500 px-5 py-1 rounded-lg text-white hover:shadow-lg font-bold"
       (click)="payment()"
-    >Pay
+    >Pagar
     </button>
   </div>
 </div>

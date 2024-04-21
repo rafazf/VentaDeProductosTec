@@ -1,0 +1,56 @@
+<div class="flex flex-col sm:flex-row justify-center gap-3 p-2">
+    <div class="flex-1 flex flex-col gap-3 justify-start">
+        <input
+        class="block w-full min-w-[70px] py-3 pl-2 pr-4 text-base font-medium leading-normal bg-white border border-solid outline-none appearance-none placeholder:text-secondary-dark peer text-stone-500 border-stone-200 bg-clip-padding rounded-2xl"
+        spellcheck="false" placeholder="Cliente" type="text"/>
+        <div class="w-full">
+            <label class="text-muted" for="searchIn">
+                
+            </label>
+        
+            <div class="flex flex-auto justify-evenly border rounded-xl w-full">
+                @for (item of tipoComprobante; track $index) {
+                    <button (click)="vaucherSelection(item.type)" [ngClass]="{'bg-red-600':item.selection}" class="border-none px-2 py-1 rounded-md w-full"  [name]="item">
+                        <label class="cursor-pointer" for="searchMCQs">{{item.type}}</label>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="flex-1 mt-3">
+        <span class="text-gray-500">Resumen de venta</span>
+        <div class="flex rounded-2xl bg-white p-2 w-full h-full flex-col justify-between gap-3">
+            <div class="">
+              @if (dataCart$ | async; as items) { @for (item of items; track $index) {
+              <div class="flex items-center gap-3 border-b justify-between">
+                <div class="flex flex-row gap-3 justify-between w-full">
+                 <span>{{ item.product.brand }}</span>
+                <span>{{ item.product.model }}</span>
+                  <div class="flex gap-2 p-2">
+                    <span>{{ item.product.price | currency:'USD' }}</span>
+                    <span>{{item.cant}}</span>
+                    <span>{{item.product.price * item.cant}} </span>
+                  </div>
+                </div>
+              </div>
+              } }
+            </div>
+            <div class="border-b p-2 flex justify-between">
+              
+                <span>Total: </span>
+                <span class="font-bold">{{total | currency:'USD'}}</span>
+
+            </div>
+          </div>
+    </div>
+</div>
+<div class="flex flex-row justify-end gap-3 mt-3"> 
+    <button class="bg-slate-300 px-5 py-3 rounded-xl text-blue-500 hover:shadow-lg font-bold"
+        (click)="onCancel()"
+    >
+        Cancelar
+    </button>
+    <button class="bg-blue-500 px-5 py-3 rounded-xl text-white hover:shadow-lg font-bold">
+        Confirmar
+    </button>
+</div>

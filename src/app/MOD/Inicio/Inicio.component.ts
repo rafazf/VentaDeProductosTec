@@ -22,6 +22,7 @@ import { PagoComponent } from './pago/pago.component';
 export default class InicioComponent {
   sharedService = inject(SharedProductsService);
   showSectionPay: boolean = false;
+  selecctionPayment: boolean = false;
 
   constructor() {
     this.sharedService.getBandPayment().subscribe((band) => {
@@ -31,5 +32,8 @@ export default class InicioComponent {
         this.showSectionPay = false;
       }
     });
+    this.sharedService.getPaymentSelection().subscribe((pay)=>{
+      pay ==='none'  ? this.selecctionPayment=false : this.selecctionPayment=true ;
+    })
   }
 }

@@ -13,11 +13,13 @@ export class SharedProductsService {
   private _products:BehaviorSubject<IProduct[]>;
   private _myCart:BehaviorSubject<IProductCar[]>;
   private  _payment:BehaviorSubject<string>;
+  private  _paymentSelection:BehaviorSubject<string>;
 
   constructor() { 
     this._products = new BehaviorSubject(this.arrProducts);
     this._myCart = new BehaviorSubject<IProductCar[]>([]);
     this._payment = new BehaviorSubject<string>('');
+    this._paymentSelection = new BehaviorSubject<string>('none');
   }
 
   get myCart(){
@@ -86,4 +88,13 @@ export class SharedProductsService {
   getBandPayment(){
     return this._payment.asObservable();
   }
+
+  /**Seleccion de método de pago */
+  paymentSelection(method: string){
+    this._paymentSelection.next(method);
+  }
+  getPaymentSelection(){
+    return  this._paymentSelection.asObservable();
+  }
+
 }
