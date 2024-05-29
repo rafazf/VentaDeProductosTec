@@ -1,0 +1,51 @@
+<div class="bg-white rounded-xl p-2 w-3/4 my-5 mx-auto">
+    
+    <div id="comprobante">
+        <div class="flex flex-col justify-center border-b-4 border-black border-dotted pb-3">
+            <span class="text-xl font-bold">Comprobante de Venta</span>
+        </div>
+        <div class="flex flex-col justify-center border-b-4 border-black border-dotted py-3">
+            <span class="text-xl">Negocios E.I.R.L</span>
+            <span class="text-sm">Av.Miguel Grau 235</span>
+        </div>
+       @if (dataClient$ |async; as data) {
+        <div class="flex flex-col justify-center mt-5 text-lg">
+            <span>{{data.type}}</span>
+            <span>{{data.nombre | uppercase}}</span>
+        </div>
+       }
+        <div class="m-auto mt-10">
+            @if (dataCart$ | async; as items) { @for (item of items; track $index) {
+                <div class="flex items-center gap-3 border-b justify-between">
+                  <div class="flex flex-row gap-3 justify-between items-center w-full">
+                   <span>{{ item.product.title }}</span>
+                  <span>{{ item.product.author }}</span>
+                    <div class="flex gap-2 p-2">
+                      <span>{{ item.product.publication_year| currency:'USD' }}</span>
+                      <span>{{item.cant}}</span>
+                      <span>{{item.product.publication_year * item.cant}} </span>
+                    </div>
+                  </div>
+                </div>
+                } }
+        </div>
+        <div class="border-b px-2 pt-5 pb-2 flex justify-between">
+                  
+            <span>Total: </span>
+            <span class="font-bold">{{total | currency:'USD'}}</span>
+    
+        </div>
+    </div>
+
+    <div class="flex flex-row justify-end gap-3 mt-3"> 
+        <button class="bg-slate-300 px-5 py-3 rounded-xl text-blue-500 hover:shadow-lg font-bold"
+        >
+            Ir a Caja
+        </button>
+        <button
+            (click)="generatePDF()" 
+            class="bg-blue-500 px-5 py-3 rounded-xl text-white hover:shadow-lg font-bold">
+            Imprimir
+        </button>
+    </div>
+</div>

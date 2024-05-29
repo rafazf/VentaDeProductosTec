@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../interfaces/IProduct';
-import { IProductCar } from '../interfaces/IProductCar';
+import { IData, IProductCar } from '../interfaces/IProductCar';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -14,12 +14,16 @@ export class SharedProductsService {
   private _myCart:BehaviorSubject<IProductCar[]>;
   private  _payment:BehaviorSubject<string>;
   private  _paymentSelection:BehaviorSubject<string>;
+  private _dataVenta:BehaviorSubject<IData>;
+  private _comprobante:BehaviorSubject<boolean>;
 
   constructor() { 
     this._products = new BehaviorSubject(this.arrProducts);
     this._myCart = new BehaviorSubject<IProductCar[]>([]);
     this._payment = new BehaviorSubject<string>('');
     this._paymentSelection = new BehaviorSubject<string>('none');
+    this._dataVenta = new BehaviorSubject<IData>({nombre:'',type:''})
+    this._comprobante = new BehaviorSubject<boolean>(false);
   }
 
   get myCart(){
@@ -97,4 +101,18 @@ export class SharedProductsService {
     return  this._paymentSelection.asObservable();
   }
 
+  setDataVenta(cliente:string,type:string){
+    this._dataVenta.next({nombre:cliente,type:type})
+  }
+  getDataVenta(){
+    return this._dataVenta.asObservable();
+  }
+
+  //Mostrar comprobante de pago
+  showComprobante(band:boolean){
+    this._comprobante.next(band);
+  }
+  getShowComprobante(){
+    return this._comprobante.asObservable();
+  }
 }

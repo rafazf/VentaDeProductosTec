@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component,inject } from '@angular/core';
-import { RequestApiService } from '../services/requestApi.service';
-import { IProduct } from '../interfaces/IProduct';
+import { RequestApiService } from '../../CORE/services/requestApi.service';
+import { IProduct } from '../../CORE/interfaces/IProduct';
 import { Observable } from 'rxjs';
-import { SharedProductsService } from '../services/sharedProducts.service';
+import { SharedProductsService } from '../../CORE/services/sharedProducts.service';
 @Component({
   selector: 'lista-productos',
   standalone: true,
@@ -21,7 +21,7 @@ export class ListaProductosComponent {
   isLoading:boolean=false;
   search:string=''
   constructor() {
-    this.products$ = this.reqApi.getData('laptops?limit=5')
+    this.products$ = this.reqApi.getData('books?limit=5')
   }
 
   /**Agregar producto al carrito */

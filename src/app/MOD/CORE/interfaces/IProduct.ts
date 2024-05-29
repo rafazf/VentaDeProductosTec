@@ -1,5 +1,21 @@
 export interface IProduct {
     id: number;
+    title: string;
+    author: string;
+    publication_year: number;
+    genre: string[];
+    description:string;
+    cover_image:string;
+  }
+  
+  interface Review {
+    username: string;
+    rating: number;
+    comment: string;
+  }
+
+  export interface IProductTec {
+    id: number;
     brand: string;
     model: string;
     release_year: number;
@@ -19,10 +35,4 @@ export interface IProduct {
         count: number;
     };
     reviews: Review[];
-  }
-  
-  interface Review {
-    username: string;
-    rating: number;
-    comment: string;
   }

@@ -1,20 +1,55 @@
-<div class="flex flex-col sm:flex-row justify-center gap-3 p-2">
+<div class="flex flex-col sm:flex-row gap-3 p-2 w-full">
     <div class="flex-1 flex flex-col gap-3 justify-start">
-        <input
-        class="block w-full min-w-[70px] py-3 pl-2 pr-4 text-base font-medium leading-normal bg-white border border-solid outline-none appearance-none placeholder:text-secondary-dark peer text-stone-500 border-stone-200 bg-clip-padding rounded-2xl"
-        spellcheck="false" placeholder="Cliente" type="text"/>
-        <div class="w-full">
-            <label class="text-muted" for="searchIn">
-                
-            </label>
-        
+        <div class="flex items-center gap-2">
+            <input
+            class="block w-full min-w-[70px] py-3 pl-2 pr-4 text-base font-medium leading-normal bg-white border border-solid outline-none appearance-none placeholder:text-secondary-dark peer text-stone-500 border-stone-200 bg-clip-padding rounded-2xl"
+            spellcheck="false" placeholder="Cliente" type="text" (ngModelChange)="seachCliente($event)" [(ngModel)]="cliente" [value]="cliente"/>
+                <div class="border rounded-xl font-bold cursor-pointer" (click)="onShowClient()">
+                    @if (showAddClient) {
+                        <span class="bg-blue-100 text-blue-500 border p-3 rounded-xl py-3">+</span>
+                    }@else {
+                        <span class="bg-red-100 text-red-500 border p-3 rounded-xl py-3">x</span>
+                    }
+                    
+                </div>
+            </div>
+
+        <div [ngClass]="{ hidden: !isLoading }" class="absolute mt-10 bg-white rounded-xl z-10 p-3 shadow-xl w-auto">
+            @if (dataClients) {
+            <ul class="flex flex-col justify-start">
+              @for (item of dataClients; track $index) {
+              <li class="uppercase items-start hover:bg-blue-500 hover:text-white rounded-xl cursor-pointer p-2" (click)="addCliente(item)">{{ item.nombre }} - {{item.id}}</li>
+              }
+            </ul>
+            }
+          </div>
+
+        <form [formGroup]="formClient" (ngSubmit)="saveCliente()" class="flex flex-col gap-2" [ngClass]="{'hidden':showAddClient}">
+            <input formControlName="nombre" class="py-2 pl-2 border-b uppercase" type="text" placeholder="Nombre">
+            <input formControlName="id" class="py-2 pl-2 border-b uppercase" type="text" placeholder="Razón Social">
+            <div class="flex items-center justify-end">
+                <button class="bg-blue-500 text-white font-bold p-2 rounded-xl" >Guardar</button>
+            </div>
+        </form>
+
+        <div class="w-full">        
             <div class="flex flex-auto justify-evenly border rounded-xl w-full">
                 @for (item of tipoComprobante; track $index) {
                     <button (click)="vaucherSelection(item.type)" [ngClass]="{'bg-red-600':item.selection}" class="border-none px-2 py-1 rounded-md w-full"  [name]="item">
-                        <label class="cursor-pointer" for="searchMCQs">{{item.type}}</label>
+                        <label (click)="onComprobante(item.type)" class="cursor-pointer" for="searchMCQs">{{item.type}}</label>
                     </button>
                 }
             </div>
+        </div>
+
+        <div class="p-2" [ngClass]="{'hidden':showCliente}">
+            <h1 class="border-b font-bold mb-3">Cliente</h1>
+            <span class="italic text-lg mt-3 uppercase">{{clienteSeleccion}}</span>
+        </div>
+
+        <div class="p-2" [ngClass]="{'hidden':showComprobante}">
+            <h1 class="border-b font-bold mb-3">Comprobante</h1>
+            <span class="text-lg mt-3 uppercase">{{clienteComprobante}}</span>
         </div>
     </div>
     <div class="flex-1 mt-3">
@@ -23,19 +58,19 @@
             <div class="">
               @if (dataCart$ | async; as items) { @for (item of items; track $index) {
               <div class="flex items-center gap-3 border-b justify-between">
-                <div class="flex flex-row gap-3 justify-between w-full">
-                 <span>{{ item.product.brand }}</span>
-                <span>{{ item.product.model }}</span>
+                <div class="flex flex-row gap-3 justify-between items-center w-full">
+                 <span>{{ item.product.title }}</span>
+                <span>{{ item.product.author }}</span>
                   <div class="flex gap-2 p-2">
-                    <span>{{ item.product.price | currency:'USD' }}</span>
+                    <span>{{ item.product.publication_year| currency:'USD' }}</span>
                     <span>{{item.cant}}</span>
-                    <span>{{item.product.price * item.cant}} </span>
+                    <span>{{item.product.publication_year * item.cant}} </span>
                   </div>
                 </div>
               </div>
               } }
             </div>
-            <div class="border-b p-2 flex justify-between">
+            <div class="border-b py-2 flex justify-between">
               
                 <span>Total: </span>
                 <span class="font-bold">{{total | currency:'USD'}}</span>
@@ -44,13 +79,16 @@
           </div>
     </div>
 </div>
-<div class="flex flex-row justify-end gap-3 mt-3"> 
+<div class="flex flex-row justify-end gap-3 mt-7"> 
     <button class="bg-slate-300 px-5 py-3 rounded-xl text-blue-500 hover:shadow-lg font-bold"
         (click)="onCancel()"
     >
         Cancelar
     </button>
-    <button class="bg-blue-500 px-5 py-3 rounded-xl text-white hover:shadow-lg font-bold">
+    <button
+        (click)="confirmSale()" 
+        class="bg-blue-500 px-5 py-3 rounded-xl text-white hover:shadow-lg font-bold">
         Confirmar
     </button>
 </div>
+

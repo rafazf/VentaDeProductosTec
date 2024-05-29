@@ -1,10 +1,18 @@
 <div class="flex flex-col md:flex-row p-1 gap-3 m-3">
-    <div [ngClass]="{'hidden':showSectionPay}" class="flex flex-col gap-3">
-        <barra-busqueda/>
-        <lista-productos/>
+        <div [ngClass]="{'hidden':showSectionPay}" class="flex flex-col gap-3">
+            <barra-busqueda />
+            <lista-productos />
+        </div>
+    <div [ngClass]="{'hidden':!showSectionPay}" class="flex flex-col w-screen gap-3">
+        <pago />
+       
     </div>
-    <div [ngClass]="{'hidden':!showSectionPay}" class="flex flex-col gap-3 flex-1">
-        <pago/>
+    <div class="w-full">
+        <carrito-productos class="flex-1" [ngClass]="{'hidden':selecctionPayment}" />
+        
+        <div class="bg-white rounded-xl flex flex-col justify-center text-center" [ngClass]="{'hidden':!showComprobante}" >
+            <comprobante/>
+        </div>
+
     </div>
-    <carrito-productos class="flex-1" [ngClass]="{'hidden':selecctionPayment}"/>
 </div>

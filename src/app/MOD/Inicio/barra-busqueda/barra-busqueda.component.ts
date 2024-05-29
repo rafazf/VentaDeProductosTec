@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IProduct } from '../interfaces/IProduct';
-import { SharedProductsService } from '../services/sharedProducts.service';
-import { RequestApiService } from '../services/requestApi.service';
+import { IProduct } from '../../CORE/interfaces/IProduct';
+import { SharedProductsService } from '../../CORE/services/sharedProducts.service';
+import { RequestApiService } from '../../CORE/services/requestApi.service';
 @Component({
   selector: 'barra-busqueda',
   standalone: true,
@@ -25,7 +25,7 @@ export class BarraBusquedaComponent {
   searchAdd(searchValue: any): any {
     this.isLoading = true;
     if(searchValue !== ''){
-      const urlSearch = `laptops?search=${searchValue}`;
+      const urlSearch = `books?search=${searchValue}`;
       this.reqApi.getData(urlSearch).subscribe( (res :IProduct[]) => {
         if (res.length === 0) {
           this.isLoading = false;

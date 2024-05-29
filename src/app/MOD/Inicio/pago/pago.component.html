@@ -1,4 +1,4 @@
-<div class="rounded-2xl flex flex-col gap-3 bg-white p-5 w-full text-center">
+<div class="rounded-2xl flex flex-col gap-3 bg-white p-5 text-center">
     <div [ngClass]="{ 'hidden': showConfirmPay }">
         <div class="mb-3">
             <span>Selecciona el método de págo</span>
@@ -27,7 +27,10 @@
             </button>
         </div>
     </div>
-    <div [ngClass]="{'hidden': !showConfirmPay}" class="">
+    <div [ngClass]="{'hidden': !showConfirmPay}">
         <metodo-pago/>
+       
     </div>
+   
+   
 </div>

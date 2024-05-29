@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { SharedProductsService } from '../services/sharedProducts.service';
+import { SharedProductsService } from '../../CORE/services/sharedProducts.service';
 import { MetodoPagoComponent } from './metodo-pago/metodo-pago.component';
 @Component({
   selector: 'pago',

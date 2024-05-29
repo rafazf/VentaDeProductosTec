@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { SharedProductsService } from '../services/sharedProducts.service';
-import { IProductCar } from '../interfaces/IProductCar';
+import { SharedProductsService } from '../../CORE/services/sharedProducts.service';
+import { IProductCar } from '../../CORE/interfaces/IProductCar';
 import { Observable, map } from 'rxjs';
-import { RequestApiService } from '../services/requestApi.service';
-import { IProduct } from '../interfaces/IProduct';
+import { RequestApiService } from '../../CORE/services/requestApi.service';
+import { IProduct } from '../../CORE/interfaces/IProduct';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'carrito-productos',
@@ -34,7 +34,7 @@ export class CarritoProductosComponent implements OnInit{
 
     this.cartService.myCart.pipe(
       map((itemCart=>{
-        return itemCart.reduce((prev, curr)=> prev + curr.product.price * curr.cant,0)
+        return itemCart.reduce((prev, curr)=> prev + curr.product.publication_year * curr.cant,0)
       }))
     ).subscribe(val=>{
       this.total = val

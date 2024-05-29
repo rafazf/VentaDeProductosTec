@@ -3,9 +3,9 @@
     @if (card$ | async; as items) { @for (item of items; track $index) {
     <div class="flex items-center gap-3 border-b justify-between">
       <div class="flex flex-row gap-3 justify-between w-full">
-        <span>{{ item.product.brand }}</span>
-        <span>{{ item.product.model }}</span>
-        <span>{{ item.product.price }}</span>
+        <span>{{ item.product.title }}</span>
+        <span>{{ item.product.genre }}</span>
+        <span>${{ item.product.publication_year }}</span>
       </div>
       <div class="flex gap-2 p-2">
         <button
